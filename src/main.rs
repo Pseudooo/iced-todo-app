@@ -1,7 +1,7 @@
 use crate::drawer::drawer;
 use crate::new_task::{NewTaskMessage, NewTaskState};
 use crate::Message::{NullMessage, ToggleNewTaskForm, WindowResized};
-use iced::widget::{button, container, row};
+use iced::widget::{button, container, row, text, column};
 use iced::{Element, Fill, Size, Subscription, Theme};
 
 mod new_task;
@@ -32,18 +32,22 @@ pub enum Message {
 impl TodoAppState {
     pub fn view(&self) -> Element<'_, Message> {
         let controls = Self::get_controls();
-        let container = container(controls)
+
+        let container = container(text("foo bar"))
             .width(Fill)
             .height(Fill);
 
-        drawer(
+        let drawer = drawer(
             self.show_new_task_form,
             ToggleNewTaskForm,
             || self.new_task_state.view().map(map_new_task_message),
             self.window_size,
             container,
-            )
-            .into()
+            );
+
+        column![
+            controls, drawer,
+        ].into()
     }
 
     fn get_controls<'a>() -> Element<'a, Message> {

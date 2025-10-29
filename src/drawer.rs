@@ -32,6 +32,7 @@ where Message: Clone + 'a
         .height(Fill)
         .push(content)
         .push(
+            // Underlay
             animation_builder((background, height), move |(background, height)| {
                 container(
                     button(container(Space::new(Fill, Fill))
@@ -72,7 +73,7 @@ where Message: Clone + 'a
                             ..Default::default()
                         }),
                     )
-                    .offset(Point::new(0.0, offset_y + 40.0))
+                    .offset(Point::new(0.0, offset_y))
                     .into()
             })
             .animates_layout(true)
