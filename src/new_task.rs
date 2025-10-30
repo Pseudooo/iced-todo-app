@@ -29,7 +29,7 @@ impl NewTaskState {
             .size(30);
 
         let task_title_input = text_input("Title", self.title.as_str())
-            .on_input(|content| TitleChanged(content));
+            .on_input(TitleChanged);
 
         let task_description_input = text_input("Description", self.description.as_str())
             .on_input(DescriptionChanged);
