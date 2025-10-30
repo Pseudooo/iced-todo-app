@@ -56,15 +56,11 @@ where Message: Clone + 'a
                     container(
                         container(drawer_content())
                             .style(move |theme: &Theme| {
-                                let border = Border {
-                                    radius: iced::border::bottom(5),
-                                    ..Border::default()
-                                };
                                 container::Style {
                                     background: Some(
                                         theme.extended_palette().background.base.color.into(),
                                     ),
-                                    border,
+                                    border: iced::border::rounded(5),
                                     ..Default::default()
                                 }
                             })
