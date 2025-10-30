@@ -7,7 +7,6 @@ pub fn drawer<'a, Message>(
     is_open: bool,
     toggle_drawer_message: Message,
     drawer_content: impl Fn() -> Element<'a, Message> + 'a,
-    window_size: Size,
     content: impl Into<Element<'a, Message>>
 ) -> Element<'a, Message>
 where Message: Clone + 'a

@@ -1,15 +1,14 @@
 use crate::drawer::drawer;
 use crate::new_task::{NewTaskMessage, NewTaskState};
-use crate::Message::{NullMessage, ToggleNewTaskForm, WindowResized};
-use iced::widget::{button, container, row, text, column};
-use iced::{Element, Fill, Size, Subscription, Theme};
+use crate::Message::{NullMessage, ToggleNewTaskForm};
+use iced::widget::{button, column, container, row, text};
+use iced::{Element, Fill, Size, Theme};
 
 mod new_task;
 mod drawer;
 
 fn main() -> iced::Result {
     iced::application("Todo App!", TodoAppState::update, TodoAppState::view)
-        .subscription(TodoAppState::subscription)
         .theme(|_| Theme::Dark)
         .font(iced_aw::iced_fonts::REQUIRED_FONT_BYTES)
         .run()
@@ -26,7 +25,6 @@ pub struct TodoAppState {
 pub enum Message {
     ToggleNewTaskForm,
     NewTaskMessage(NewTaskMessage),
-    WindowResized(Size),
     NullMessage,
 }
 
@@ -42,7 +40,6 @@ impl TodoAppState {
             self.show_new_task_form,
             ToggleNewTaskForm,
             || self.new_task_state.view().map(map_new_task_message),
-            self.window_size,
             container,
             );
 
@@ -70,21 +67,9 @@ impl TodoAppState {
             Message::NewTaskMessage(message) => {
                 self.new_task_state.update(message)
             },
-            WindowResized(size) => {
-                self.window_size = size;
-            },
             NullMessage => println!("Null Message"),
             _ => println!("Unknown message")
         }
-    }
-
-    pub fn subscription(&self) -> Subscription<Message> {
-        iced::event::listen_with(|e, _, _| match e {
-            iced::Event::Window(iced::window::Event::Resized(size)) => {
-                Some(WindowResized(size))
-            }
-            _ => None,
-        })
     }
 }
 
