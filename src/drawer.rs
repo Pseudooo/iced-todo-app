@@ -52,7 +52,7 @@ where Message: Clone + 'a
         .push(
             // Drawer content
             animation_builder((background, height), move |(background, height)| {
-                let offset_y = window_size.height - height - PADDING * height / MAX_HEIGHT;
+                let offset_y = -MAX_HEIGHT + height + PADDING * height / MAX_HEIGHT;
                 Offset::new(
                     container(
                         container(drawer_content())
