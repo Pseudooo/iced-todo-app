@@ -9,6 +9,7 @@ mod drawer;
 
 fn main() -> iced::Result {
     iced::application("Todo App!", TodoAppState::update, TodoAppState::view)
+        .subscription(TodoAppState::subscription)
         .theme(|_| Theme::Dark)
         .font(iced_aw::iced_fonts::REQUIRED_FONT_BYTES)
         .run()

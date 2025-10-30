@@ -64,7 +64,7 @@ where Message: Clone + 'a
                                 ..Default::default()
                             })
                             .padding(8)
-                            .height(Fill)
+                            .width(Fill)
                             .center_y(Length::Fixed(MAX_HEIGHT)),
                         )
                         .padding(Padding::new(PADDING).bottom(0))
