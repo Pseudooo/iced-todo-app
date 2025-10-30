@@ -72,7 +72,7 @@ where Message: Clone + 'a
                             .width(Fill)
                             .center_y(Length::Fixed(MAX_HEIGHT)),
                         )
-                        .padding(Padding::new(PADDING).bottom(0).top(0))
+                        .padding(Padding::new(PADDING).bottom(0))
                         .style(move |_| container::Style {
                             background: Some(background.into()),
                             ..Default::default()
