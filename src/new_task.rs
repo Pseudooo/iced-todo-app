@@ -78,7 +78,7 @@ impl NewTaskState {
             .style(button::success)
             .on_press(CreateNewTask(NewTaskPayload {
                 title: self.title.clone(),
-                description: if self.description == "" { None } else { Some(self.description.clone()) },
+                description: if self.description.is_empty() { None } else { Some(self.description.clone()) },
                 due_date: self.due_date,
             }));
         let cancel_button = button("Cancel")

@@ -1,7 +1,6 @@
 use crate::task::TaskMessage::ToggleCompleted;
-use iced::widget::{checkbox, column, container, row, text};
-use iced::{Center, Element, Fill};
-use iced::advanced::graphics::text::cosmic_text::Align;
+use iced::widget::{checkbox, column, row, text};
+use iced::{Center, Element};
 use iced_aw::date_picker::Date;
 use uuid::Uuid;
 

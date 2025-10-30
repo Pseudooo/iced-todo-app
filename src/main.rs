@@ -2,7 +2,7 @@ use crate::drawer::drawer;
 use crate::new_task::{NewTaskMessage, NewTaskPayload, NewTaskState};
 use crate::task::{TaskMessage, TaskState};
 use crate::Message::{NullMessage, ToggleNewTaskForm};
-use iced::widget::{button, column, keyed_column, row, scrollable};
+use iced::widget::{button, column, keyed_column, row};
 use iced::{Element, Fill, Size, Theme};
 use uuid::Uuid;
 
@@ -99,7 +99,6 @@ impl TodoAppState {
                 target_task.unwrap().update(message)
             }
             NullMessage => println!("Null Message"),
-            _ => println!("Unknown message")
         }
     }
 }
