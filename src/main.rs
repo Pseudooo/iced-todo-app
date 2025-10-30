@@ -2,7 +2,7 @@ use crate::drawer::drawer;
 use crate::new_task::{NewTaskMessage, NewTaskPayload, NewTaskState};
 use crate::task::{TaskMessage, TaskState};
 use crate::Message::{NullMessage, ToggleNewTaskForm};
-use iced::widget::{button, column, keyed_column, row};
+use iced::widget::{button, column, keyed_column, row, scrollable};
 use iced::{Element, Fill, Size, Theme};
 use uuid::Uuid;
 
@@ -64,13 +64,15 @@ impl TodoAppState {
     }
 
     fn get_task_list(&self) -> Element<'_, Message> {
-        keyed_column(self.tasks.iter()
+        let column = keyed_column(self.tasks.iter()
             .map(|task| {
                 let id = task.id;
                 (id, task.view().map(move |msg| map_task_message(id, msg)))
             }))
             .padding(10)
-            .spacing(10)
+            .spacing(10);
+
+        scrollable(column)
             .into()
     }
 
