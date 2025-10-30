@@ -33,6 +33,7 @@ impl TodoAppState {
         let controls = Self::get_controls();
 
         let container = container(text("foo bar"))
+            .padding(5)
             .width(Fill)
             .height(Fill);
 

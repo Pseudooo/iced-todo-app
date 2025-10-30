@@ -11,7 +11,7 @@ pub fn drawer<'a, Message>(
 ) -> Element<'a, Message>
 where Message: Clone + 'a
 {
-    const PADDING: f32 = 8.0;
+    const PADDING: f32 = 5.0;
     const MAX_HEIGHT: f32 = 350.0;
 
     let height = match is_open {
@@ -51,22 +51,28 @@ where Message: Clone + 'a
         .push(
             // Drawer content
             animation_builder((background, height), move |(background, height)| {
-                let offset_y = -MAX_HEIGHT + height + PADDING * height / MAX_HEIGHT;
+                let offset_y = height - MAX_HEIGHT + PADDING * height / MAX_HEIGHT;
                 Offset::new(
                     container(
                         container(drawer_content())
-                            .style(move |theme: &Theme| container::Style {
-                                background: Some(
-                                    theme.extended_palette().background.base.color.into(),
-                                ),
-                                border: Border::default().rounded(8),
-                                ..Default::default()
+                            .style(move |theme: &Theme| {
+                                let border = Border {
+                                    radius: iced::border::bottom(5),
+                                    ..Border::default()
+                                };
+                                container::Style {
+                                    background: Some(
+                                        theme.extended_palette().background.base.color.into(),
+                                    ),
+                                    border,
+                                    ..Default::default()
+                                }
                             })
-                            .padding(8)
+                            .padding(PADDING)
                             .width(Fill)
                             .center_y(Length::Fixed(MAX_HEIGHT)),
                         )
-                        .padding(Padding::new(PADDING).bottom(0))
+                        .padding(Padding::new(PADDING).bottom(0).top(0))
                         .style(move |_| container::Style {
                             background: Some(background.into()),
                             ..Default::default()
