@@ -127,7 +127,7 @@ where
     Theme: 'a,
     Renderer: iced::advanced::Renderer,
 {
-    fn size(&self) -> iced::Size<Length> {
+    fn size(&self) -> Size<Length> {
         self.content.as_widget().size()
     }
 
@@ -155,7 +155,7 @@ where
         style: &iced::advanced::renderer::Style,
         layout: iced::advanced::Layout<'_>,
         cursor: iced::advanced::mouse::Cursor,
-        viewport: &iced::Rectangle,
+        viewport: &Rectangle,
     ) {
         self.content
             .as_widget()
