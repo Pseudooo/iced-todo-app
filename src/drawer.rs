@@ -1,6 +1,6 @@
 use iced::advanced::Widget;
 use iced::widget::{button, container, Space, Stack};
-use iced::{Border, Color, Element, Fill, Length, Padding, Point, Rectangle, Size, Theme, Vector};
+use iced::{Color, Element, Fill, Length, Padding, Point, Rectangle, Size, Theme, Vector};
 use iced_anim::{animation_builder, Motion};
 
 pub fn drawer<'a, Message>(
