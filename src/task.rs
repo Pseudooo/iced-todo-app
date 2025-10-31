@@ -48,10 +48,15 @@ impl TaskState {
         container(row)
             .style(|theme: &Theme| {
                 let palette = theme.extended_palette();
+                let border_color = match self.is_editing {
+                    true => palette.primary.strong.color,
+                    false => palette.secondary.base.color,
+                };
+
                 container::Style {
                     border: iced::border::width(2)
                         .rounded(5)
-                        .color(palette.secondary.base.color),
+                        .color(border_color),
                     ..Default::default()
                 }
             })
