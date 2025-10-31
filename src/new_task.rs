@@ -28,6 +28,7 @@ pub enum NewTaskMessage {
     ClearDueDate,
     CancelNewTask,
     CreateNewTask(NewTaskPayload),
+    ClearState,
 }
 
 impl NewTaskState {
@@ -116,6 +117,11 @@ impl NewTaskState {
             },
             CreateNewTask(_) => unreachable!("Create new task will be handled by parent"),
             CancelNewTask => unreachable!("Cancel New task will be intercepted by the parent and handled there"),
+            NewTaskMessage::ClearState => {
+                self.title = "".to_string();
+                self.description = "".to_string();
+                self.due_date = None;
+            }
         }
     }
 }
