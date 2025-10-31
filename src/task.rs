@@ -81,8 +81,10 @@ impl TaskState {
 
     fn get_details_section(&self) -> Element<'_, TaskMessage> {
         if !self.is_editing {
-            let title_label = text(self.title.as_str());
-            let description_label = text(self.description.clone().unwrap_or("".to_string()));
+            let title_label = container(text(self.title.as_str()))
+                .padding(5);
+            let description_label = container(text(self.description.clone().unwrap_or("".to_string())))
+                .padding(5);
             return column![
                     title_label,
                     description_label,
