@@ -1,7 +1,9 @@
 use crate::task::TaskMessage::ToggleCompleted;
-use iced::widget::{checkbox, column, container, row, text};
+use iced::widget::{button, checkbox, column, container, row, text};
 use iced::{Center, Element, Fill, Theme};
 use iced_aw::date_picker::Date;
+use lucide_icons::iced::icon_pencil;
+use lucide_icons::Icon;
 use uuid::Uuid;
 
 #[derive(Debug, Clone)]
@@ -22,6 +24,11 @@ impl TaskState {
     pub fn view(&self) -> Element<'_, TaskMessage> {
         let completed_toggle = checkbox("", self.completed)
             .on_toggle(ToggleCompleted);
+        let edit_button = button(icon_pencil())
+            .style(button::success);
+        let controls = row![completed_toggle, edit_button]
+            .align_y(Center)
+            .spacing(5);
 
         let title_label = text(self.title.as_str());
         let description_label = text(self.description.clone().unwrap_or("".to_string()));
@@ -31,10 +38,11 @@ impl TaskState {
         ];
 
         let row = row![
-            completed_toggle,
+            controls,
             details_column,
             ]
-            .align_y(Center);
+            .align_y(Center)
+            .spacing(10);
         container(row)
             .style(|theme: &Theme| {
                 let palette = theme.extended_palette();

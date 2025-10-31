@@ -7,6 +7,7 @@ use iced::{Element, Fill, Size, Theme};
 use uuid::Uuid;
 use crate::new_task::NewTaskMessage::ClearState;
 
+
 mod new_task;
 mod drawer;
 mod task;
@@ -15,6 +16,7 @@ fn main() -> iced::Result {
     iced::application("Todo App!", TodoAppState::update, TodoAppState::view)
         .theme(|_| Theme::Dark)
         .font(iced_aw::iced_fonts::REQUIRED_FONT_BYTES)
+        .font(lucide_icons::LUCIDE_FONT_BYTES)
         .run()
 }
 
