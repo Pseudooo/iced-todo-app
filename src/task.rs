@@ -2,7 +2,7 @@ use crate::task::TaskMessage::{DescriptionUpdated, TitleUpdated, ToggleCompleted
 use iced::widget::{button, checkbox, column, container, row, text, text_input};
 use iced::{Center, Element, Fill, Theme};
 use iced_aw::date_picker::Date;
-use lucide_icons::iced::icon_pencil;
+use lucide_icons::iced::{icon_check, icon_pencil};
 use uuid::Uuid;
 
 #[derive(Debug, Clone)]
@@ -36,15 +36,7 @@ impl TaskState {
     }
 
     pub fn view(&self) -> Element<'_, TaskMessage> {
-        let completed_toggle = checkbox("", self.completed)
-            .on_toggle(ToggleCompleted);
-        let edit_button = button(icon_pencil())
-            .style(button::success)
-            .on_press(ToggleIsEditing);
-        let controls = row![completed_toggle, edit_button]
-            .align_y(Center)
-            .spacing(5);
-
+        let controls = self.get_controls();
         let details = self.get_details_section();
 
         let row = row![
@@ -65,6 +57,20 @@ impl TaskState {
             })
             .width(Fill)
             .padding(10)
+            .into()
+    }
+
+    fn get_controls(&self) -> Element<'_, TaskMessage> {
+        let completed_toggle = checkbox("", self.completed)
+            .on_toggle(ToggleCompleted);
+        let edit_button = match self.is_editing {
+            true => button(icon_check()),
+            false => button(icon_pencil()),
+        }.on_press(ToggleIsEditing).style(button::success);
+
+        row![completed_toggle, edit_button]
+            .align_y(Center)
+            .spacing(5)
             .into()
     }
 
