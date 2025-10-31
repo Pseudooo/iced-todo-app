@@ -7,6 +7,7 @@ use iced::{Element, Fill, Size, Theme};
 use uuid::Uuid;
 use crate::new_task::NewTaskMessage::ClearState;
 
+
 mod new_task;
 mod drawer;
 mod task;
@@ -15,6 +16,7 @@ fn main() -> iced::Result {
     iced::application("Todo App!", TodoAppState::update, TodoAppState::view)
         .theme(|_| Theme::Dark)
         .font(iced_aw::iced_fonts::REQUIRED_FONT_BYTES)
+        .font(lucide_icons::LUCIDE_FONT_BYTES)
         .run()
 }
 
@@ -86,13 +88,7 @@ impl TodoAppState {
                 self.new_task_state.update(message)
             },
             Message::CreateNewTask(payload) => {
-                let new_task_state = TaskState {
-                    id: Uuid::new_v4(),
-                    title: payload.title,
-                    description: payload.description,
-                    due_date: payload.due_date,
-                    completed: false,
-                };
+                let new_task_state = TaskState::new(payload.title, payload.description, payload.due_date);
                 self.tasks.push(new_task_state);
                 self.show_new_task_form = false;
                 self.new_task_state.update(ClearState);
