@@ -8,3 +8,4 @@ iced = "0.13.1"
 iced_aw = { version = "0.12.2"}
 iced_anim = "0.2.1"
 uuid = { version = "1.18.1", features = ["v4"] }
+lucide-icons = { version = "0.548.0", features = ["iced"] }
