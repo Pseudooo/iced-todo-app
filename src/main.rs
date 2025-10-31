@@ -88,13 +88,7 @@ impl TodoAppState {
                 self.new_task_state.update(message)
             },
             Message::CreateNewTask(payload) => {
-                let new_task_state = TaskState {
-                    id: Uuid::new_v4(),
-                    title: payload.title,
-                    description: payload.description,
-                    due_date: payload.due_date,
-                    completed: false,
-                };
+                let new_task_state = TaskState::new(payload.title, payload.description, payload.due_date);
                 self.tasks.push(new_task_state);
                 self.show_new_task_form = false;
                 self.new_task_state.update(ClearState);
