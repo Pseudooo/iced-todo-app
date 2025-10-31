@@ -1,4 +1,4 @@
-use crate::new_task::NewTaskMessage::{CancelNewTask, ClearDueDate, DescriptionChanged, SubmitDatePicker, TitleChanged, ToggleDatePicker};
+use crate::new_task::NewTaskMessage::{CancelNewTask, ClearDueDate, CreateNewTask, DescriptionChanged, SubmitDatePicker, TitleChanged, ToggleDatePicker};
 use iced::widget::{button, column, container, row, text, text_input};
 use iced::{Center, Element, Fill, Left};
 use iced_aw::date_picker::Date;
@@ -13,6 +13,13 @@ pub struct NewTaskState {
 }
 
 #[derive(Debug, Clone)]
+pub struct NewTaskPayload {
+    pub title: String,
+    pub description: Option<String>,
+    pub due_date: Option<Date>,
+}
+
+#[derive(Debug, Clone)]
 pub enum NewTaskMessage {
     TitleChanged(String),
     DescriptionChanged(String),
@@ -20,6 +27,8 @@ pub enum NewTaskMessage {
     SubmitDatePicker(Date),
     ClearDueDate,
     CancelNewTask,
+    CreateNewTask(NewTaskPayload),
+    ClearState,
 }
 
 impl NewTaskState {
@@ -67,7 +76,12 @@ impl NewTaskState {
         };
 
         let save_button= button("Save")
-            .style(button::success);
+            .style(button::success)
+            .on_press(CreateNewTask(NewTaskPayload {
+                title: self.title.clone(),
+                description: if self.description.is_empty() { None } else { Some(self.description.clone()) },
+                due_date: self.due_date,
+            }));
         let cancel_button = button("Cancel")
             .style(button::danger)
             .on_press(CancelNewTask);
@@ -101,7 +115,13 @@ impl NewTaskState {
             ClearDueDate => {
                 self.due_date = None;
             },
+            CreateNewTask(_) => unreachable!("Create new task will be handled by parent"),
             CancelNewTask => unreachable!("Cancel New task will be intercepted by the parent and handled there"),
+            NewTaskMessage::ClearState => {
+                self.title = "".to_string();
+                self.description = "".to_string();
+                self.due_date = None;
+            }
         }
     }
 }

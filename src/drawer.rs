@@ -1,6 +1,6 @@
 use iced::advanced::Widget;
 use iced::widget::{button, container, Space, Stack};
-use iced::{Border, Color, Element, Fill, Length, Padding, Point, Rectangle, Size, Theme, Vector};
+use iced::{Color, Element, Fill, Length, Padding, Point, Rectangle, Size, Theme, Vector};
 use iced_anim::{animation_builder, Motion};
 
 pub fn drawer<'a, Message>(
@@ -14,14 +14,9 @@ where Message: Clone + 'a
     const PADDING: f32 = 5.0;
     const MAX_HEIGHT: f32 = 350.0;
 
-    let height = match is_open {
-        true => MAX_HEIGHT,
-        false => 0.0,
-    };
-
-    let background = match is_open {
-        true => Color::from_rgba(0.0, 0.0, 0.0, 0.75),
-        false => Color::TRANSPARENT,
+    let (height, background) = match is_open {
+        true => (MAX_HEIGHT, Color::from_rgba(0.0, 0.0, 0.0, 0.75)),
+        false => (0.0, Color::TRANSPARENT),
     };
 
     let motion = Motion::SNAPPY;
@@ -51,20 +46,21 @@ where Message: Clone + 'a
         .push(
             // Drawer content
             animation_builder((background, height), move |(background, height)| {
+                // Hacky way to prevent the drawer being visible when its closed
+               if height <= 0.0 {
+                   return Space::new(Fill, Fill).into();
+               }
+
                 let offset_y = height - MAX_HEIGHT + PADDING * height / MAX_HEIGHT;
                 Offset::new(
                     container(
                         container(drawer_content())
                             .style(move |theme: &Theme| {
-                                let border = Border {
-                                    radius: iced::border::bottom(5),
-                                    ..Border::default()
-                                };
                                 container::Style {
                                     background: Some(
                                         theme.extended_palette().background.base.color.into(),
                                     ),
-                                    border,
+                                    border: iced::border::rounded(5),
                                     ..Default::default()
                                 }
                             })
