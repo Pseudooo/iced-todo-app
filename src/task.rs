@@ -1,6 +1,7 @@
 use crate::task::TaskMessage::{DescriptionUpdated, TitleUpdated, ToggleCompleted, ToggleIsEditing};
 use iced::widget::{button, checkbox, column, container, row, text, text_input};
-use iced::{Center, Element, Fill, Theme};
+use iced::{Center, Element, Fill, Font, Theme};
+use iced::font::{Style, Weight};
 use iced_aw::date_picker::Date;
 use lucide_icons::iced::{icon_check, icon_pencil};
 use uuid::Uuid;
@@ -81,9 +82,17 @@ impl TaskState {
 
     fn get_details_section(&self) -> Element<'_, TaskMessage> {
         if !self.is_editing {
-            let title_label = container(text(self.title.as_str()))
+            let title_label = container(text(self.title.as_str())
+                .font(Font {
+                    weight: Weight::Bold,
+                    ..Default::default()
+                }))
                 .padding(5);
-            let description_label = container(text(self.description.clone().unwrap_or("".to_string())))
+            let description_label = container(text(self.description.clone().unwrap_or("".to_string()))
+                .font(Font {
+                    style: Style::Italic,
+                    ..Default::default()
+                }))
                 .padding(5);
             return column![
                     title_label,
