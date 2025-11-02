@@ -1,11 +1,12 @@
 use crate::drawer::drawer;
+use crate::new_task::NewTaskMessage::ClearState;
 use crate::new_task::{NewTaskMessage, NewTaskPayload, NewTaskState};
 use crate::task::{TaskMessage, TaskState};
-use crate::Message::{NullMessage};
+use crate::Message::NullMessage;
 use iced::widget::{button, column, keyed_column, row, scrollable};
 use iced::{Element, Fill, Size, Theme};
+use lucide_icons::iced::icon_plus;
 use uuid::Uuid;
-use crate::new_task::NewTaskMessage::ClearState;
 
 
 mod new_task;
@@ -56,7 +57,7 @@ impl TodoAppState {
     }
 
     fn get_controls<'a>() -> Element<'a, Message> {
-        let new_task_button = button("New Task")
+        let new_task_button = button(icon_plus())
             .style(button::success)
             .on_press(Message::ToggleNewTaskForm);
 
